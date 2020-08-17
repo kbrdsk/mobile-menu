@@ -1,0 +1,35 @@
+{
+  "name": "mobile-menu",
+  "version": "1.0.0",
+  "description": "for the Odin Project",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest -all --coverage",
+    "watch": "jest --watch",
+    "build": "webpack --progress -p",
+    "server": "webpack-dev-server --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kbrdsk/mobile-menu.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kbrdsk/mobile-menu/issues"
+  },
+  "homepage": "https://github.com/kbrdsk/mobile-menu#readme",
+  "devDependencies": {
+    "css-loader": "^4.2.1",
+    "eslint": "^7.7.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "file-loader": "^6.0.0",
+    "jest": "^26.4.0",
+    "prettier": "^2.0.5",
+    "style-loader": "^1.2.1",
+    "sublime-js-prettier": "^1.30.7",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
