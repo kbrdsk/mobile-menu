@@ -1,0 +1,40 @@
+.collapsing-menu{
+	display: flex;
+	flex-direction: row;
+	width: 80vw;
+}
+
+.menu-item{
+	padding: 1em;
+	flex: 0 0 3em;
+	transition: all 0.5s ease-out;
+}
+
+.drop-down-menu{
+	display: flex;
+	flex-direction: column;
+	width: 5em;
+}
+
+.drop-down-menu[displaying=false]{
+	height: 0;
+	overflow: hidden;
+}
+
+.drop-down-menu[displaying=true]{
+	height: auto;
+}
+
+.menu-item{
+	position: relative;
+}
+
+.drop-down-menu > .menu-item[displaying=false]{
+	left: 5em;
+	opacity: 0;
+}
+
+.drop-down-menu > .menu-item[displaying=true]{
+	left: 0em;
+	opacity: 1;
+}
