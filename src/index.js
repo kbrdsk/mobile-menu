@@ -17,21 +17,6 @@ function buildMenu(menu) {
 	resizeObserver.observe(menu);
 }
 
-function buildMoreTab() {
-	const moreTab = document.createElement("div");
-	moreTab.classList.add("more-tab");
-	moreTab.items = [];
-	moreTab.activator = document.createElement("div");
-	moreTab.activator.textContent = "More";
-	moreTab.activator.addEventListener("click", () => toggleDropdown(moreTab));
-	moreTab.appendChild(moreTab.activator);
-	moreTab.menu = document.createElement("div");
-	moreTab.menu.classList.add("drop-down-menu");
-	buildDropDown(moreTab);
-	moreTab.activator.classList.add("menu-item");
-	return moreTab;
-}
-
 function moveMenuItems(menu) {
 	const menuWidth = menu.getBoundingClientRect().width;
 	let activeMenuItemWidth = menu.displayedItems.reduce(
@@ -44,7 +29,7 @@ function moveMenuItems(menu) {
 		const nextItem = menu.displayedItems.pop();
 		activeMenuItemWidth -= nextItem.getBoundingClientRect().width;
 		menu.moreTab.items.unshift(nextItem);
-		buildDropDown(menu.moreTab);
+		buildDropMenu(menu.moreTab.items, menu.moreTab);
 	}
 	while (
 		menu.moreTab.items[0] &&
@@ -57,14 +42,28 @@ function moveMenuItems(menu) {
 		activeMenuItemWidth += nextItem.getBoundingClientRect().width;
 		menu.displayedItems.push(nextItem);
 		menu.insertBefore(nextItem, menu.moreTab);
-		buildDropDown(menu.moreTab);
+		buildDropMenu(menu.moreTab.items, menu.moreTab);
 	}
 }
 
-function buildDropDown(moreTab) {
+function buildMoreTab() {
+	const moreTab = document.createElement("div");
+	moreTab.classList.add("more-tab");
+	moreTab.items = [];
+	moreTab.activator = buildDropActivator(moreTab);
+	moreTab.appendChild(moreTab.activator);
 	moreTab.menu = buildDropMenu(moreTab.items, moreTab);
 	moreTab.appendChild(moreTab.menu);
-	moreTab.expanded = false;
+	buildDropMenu(moreTab.items, moreTab);
+	return moreTab;
+}
+
+function buildDropActivator(dropDown){
+	const activator = document.createElement("div");
+	activator.textContent = "More";
+	activator.addEventListener("click", () => toggleDropdown(dropDown));
+	activator.classList.add("menu-item");
+	return activator;
 }
 
 function dropDownCascade(dropDownItem, dropDown) {
@@ -83,13 +82,14 @@ function dropDownCascade(dropDownItem, dropDown) {
 }
 
 function buildDropMenu(menuItems, dropDown) {
-	const menu = dropDown.menu;
+	dropDown.expanded = false;
+	const menu = dropDown.menu? dropDown.menu: document.createElement("div");
+	menu.classList.add("drop-down-menu");
 	menu.setAttribute("displaying", false);
 	menuItems.map((item, index) => {
 		item.setAttribute("displaying", false);
 		menu.appendChild(item);
 	});
-
 	return menu;
 }
 
